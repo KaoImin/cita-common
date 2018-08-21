@@ -163,7 +163,7 @@ impl JournalDB for ArchiveDB {
 
         for i in self.overlay.drain() {
             let (key, (value, rc)) = i;
-            if key == H256::from(b"0x84fb6a9c888296d6e74cd75091a6284b60a4d8105e623f0b134f358154ad82c4") {
+            if key == H256::from_slice(b"0x84fb6a9c888296d6e74cd75091a6284b60a4d8105e623f0b134f358154ad82c4") {
                 info!("NO!!!!!");
                 info!("key = {:?}, value = {:?}, rc = {:?}", key, value, rc);
             }
