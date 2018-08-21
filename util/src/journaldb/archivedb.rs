@@ -27,6 +27,7 @@ use memorydb::*;
 use rlp::*;
 use std::collections::HashMap;
 use std::sync::Arc;
+use types::traits::LowerHex;
 
 /// Implementation of the `HashDB` trait for a disk-backed database with a memory overlay
 /// and latent-removal semantics.
@@ -164,6 +165,8 @@ impl JournalDB for ArchiveDB {
             let (key, (value, rc)) = i;
             if rc > 0 {
                 if self.backing.get(self.column, &key)?.is_some() {
+                    info!("already exist.....");
+                    info!("key = {:?}", key.lower_hex());
                     return Err(BaseDataError::AlreadyExists(key).into());
                 }
                 batch.put(self.column, &key, &value);
