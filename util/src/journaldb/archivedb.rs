@@ -164,6 +164,9 @@ impl JournalDB for ArchiveDB {
         for i in self.overlay.drain() {
             let (key, (value, rc)) = i;
             info!("key = {:?}", key.lower_hex());
+            if key.lower_hex().starts_with("84fb6a9c888296d6e74cd75091a6284b60a4d8105e623f0b134f358154ad82c4") {
+                info!("value = {:?}, rc = {:?}", value, rc);
+            }
 
             if rc > 0 {
                 if self.backing.get(self.column, &key)?.is_some() {
