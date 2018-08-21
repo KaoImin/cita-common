@@ -169,9 +169,10 @@ impl JournalDB for ArchiveDB {
             }
 
             if rc > 0 {
-                if self.backing.get(self.column, &key)?.is_some() {
-                    info!("already exist.....");
-                    info!("key = {:?}, value = {:?}, rc = {:?}", key.lower_hex(), value, rc);
+                info!("key = {:?}, value = {:?}", key.lower_hex(), value);
+                let v = self.backing.get(self.column, &key)?;
+                info!("v = {:?}", v);
+                if v.is_some() && v.unwrap() != value {
                     return Err(BaseDataError::AlreadyExists(key).into());
                 }
                 batch.put(self.column, &key, &value);
